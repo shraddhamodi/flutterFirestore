@@ -16,6 +16,12 @@ if (flutterVersionCode == null) {
     flutterVersionCode = '1'
 }
 
+rootProject.ext {
+    set('FlutterFire', [
+            FirebaseSDKVersion: '29.0.0'
+    ])
+}
+
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
@@ -23,6 +29,7 @@ if (flutterVersionName == null) {
 
 apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion flutter.compileSdkVersion
@@ -35,8 +42,9 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.flutterfirestore"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -48,6 +56,10 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+}
+
+dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
 }
 
 flutter {
